@@ -1,5 +1,3 @@
-
-import './App.css';
 import Navbar from './Navbar';
 import Home from './Home';
 //This is not written in html but in jsx and then converted to html
