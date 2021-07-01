@@ -1,4 +1,5 @@
-import { useState }from 'react';
+import { useState, useEffect }from 'react';
+import BlogList from './BlogLIst';
 
 const Home= () => {
     const [blogs, setBlogs] = useState([
@@ -7,14 +8,24 @@ const Home= () => {
         { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'mario', id: 3 }
       ])
 
+      const[name, setName] = useState('mario');
+
+      const handleDelete = (id) =>{
+        const newBlogs = blogs.filter(blog => blog.id !== id);
+        setBlogs(newBlogs);
+      }
+
+      useEffect(() => {
+          console.log('use effect ran')
+          console.log({name})
+      }, [name]);
+
     return ( 
         <div className = "home">
-            {blogs.map(blog => (
-        <div className="blog-preview" key={blog.id} >
-          <h2>{ blog.title }</h2>
-          <p>Written by { blog.author }</p>
-        </div>
-      ))}    
+           <BlogList blogs = {blogs} title = "All Blogs!" handleDelete = {handleDelete}></BlogList>
+           <BlogList blogs = {blogs.filter((blog) => blog.author === 'mario')} title = "Mario's Blogs!"></BlogList>
+           <button onClick = {() => setName('Luigi')}>change Name </button>
+           <p>{name}</p>
         </div>
 
      );
@@ -22,7 +33,9 @@ const Home= () => {
  
 export default Home;
 
-/*const handleClick = () => {
+/*
+
+const handleClick = () => {
     console.log('hello, ninjas')
 }
 const handleClickAgain = (name) => {
@@ -52,3 +65,27 @@ const Home= () => {
 
      );
 }*/
+
+/*[NOTES FOR LECTURE 11]
+import { useState }from 'react';
+import BlogList from './BlogLIst';
+
+const Home= () => {
+    const [blogs, setBlogs] = useState([
+        { title: 'My new website', body: 'lorem ipsum...', author: 'mario', id: 1 },
+        { title: 'Welcome party!', body: 'lorem ipsum...', author: 'yoshi', id: 2 },
+        { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'mario', id: 3 }
+      ])
+
+    return ( 
+        <div className = "home">
+        //blogs and title below are the props
+           <BlogList blogs = {blogs//FROM THE ABOVE CONST} title = "These are the blogs"></BlogList>
+        </div>
+
+     );
+}
+ 
+export default Home;
+
+*/ 
